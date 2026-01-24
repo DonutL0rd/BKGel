@@ -1,0 +1,5 @@
+{
+  "name": "BioQuant Gel Analyzer",
+  "description": "Professional gel electrophoresis quantification tool featuring rolling-ball background subtraction, band detection, and degradation streak analysis.",
+  "requestFramePermissions": []
+}
