@@ -17,6 +17,7 @@ const DEFAULT_SETTINGS: GelSettings = {
   roiLeft: 0,
   roiRight: 0,
   invertImage: false,
+  backgroundSubtractionMethod: 'rollingBall', // Default
   backgroundRollingBallRadius: 150, 
   backgroundSmoothing: 30, 
   minPeakProminence: 2, 
@@ -284,7 +285,7 @@ export default function App() {
       <aside className="w-full md:w-80 bg-white border-r border-slate-200 p-6 flex flex-col gap-6 overflow-y-auto h-screen sticky top-0">
         <div className="flex items-center gap-2 mb-4">
           <Activity className="text-blue-600" size={24} />
-          <h1 className="text-xl font-bold text-slate-800 tracking-tight">BioQuant <span className="text-slate-400 font-normal text-sm">v2.8</span></h1>
+          <h1 className="text-xl font-bold text-slate-800 tracking-tight">BioQuant <span className="text-slate-400 font-normal text-sm">v3.0</span></h1>
         </div>
 
         <div className="space-y-4">
@@ -404,6 +405,41 @@ export default function App() {
               />
             </div>
           </div>
+
+          <div className="flex items-center gap-2 pb-2 border-b border-slate-100 pt-4">
+            <Settings size={16} className="text-slate-400" />
+            <h2 className="text-sm font-semibold text-slate-700">Analysis Settings</h2>
+          </div>
+          
+          <div className="space-y-4">
+             <div>
+               <label className="text-xs font-semibold text-slate-500 uppercase">Background Subtraction</label>
+               <select 
+                 value={settings.backgroundSubtractionMethod}
+                 onChange={(e) => updateSetting('backgroundSubtractionMethod', e.target.value as any)}
+                 className="w-full mt-1 border rounded px-2 py-1 text-sm bg-slate-50"
+               >
+                 <option value="rollingBall">Rolling Ball</option>
+                 <option value="median">Median Filter</option>
+                 <option value="none">None</option>
+               </select>
+             </div>
+             {settings.backgroundSubtractionMethod !== 'none' && (
+               <div>
+                  <label className="text-xs font-semibold text-slate-500 uppercase">Radius (px)</label>
+                  <input
+                    type="range"
+                    min="10"
+                    max="500"
+                    step="10"
+                    value={settings.backgroundRollingBallRadius}
+                    onChange={(e) => updateSetting('backgroundRollingBallRadius', parseInt(e.target.value))}
+                    className="w-full mt-1 accent-blue-600"
+                  />
+               </div>
+             )}
+          </div>
+
         </div>
       </aside>
 

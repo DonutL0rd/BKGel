@@ -13,6 +13,8 @@ export interface Rect {
 
 export type InteractionMode = 'select' | 'crop';
 
+export type BackgroundMethod = 'rollingBall' | 'median' | 'none';
+
 export interface GelSettings {
   autoDetectLanes: boolean;
   numLanes: number;
@@ -24,14 +26,14 @@ export interface GelSettings {
   roiLeft: number;
   roiRight: number;
   invertImage: boolean;
+  backgroundSubtractionMethod: BackgroundMethod; // New
   backgroundRollingBallRadius: number;
-  backgroundSmoothing: number; // New: Smooth background profile
+  backgroundSmoothing: number; 
   minPeakProminence: number;
-  smoothing: number; // Signal smoothing
-  // New parameters
+  smoothing: number; 
   minPeakDistance: number; 
   noiseTolerance: number; 
-  bandBoundarySigma: number; // New: Width multiplier for Gaussian band fitting
+  bandBoundarySigma: number; 
   showBackgroundProfile: boolean; 
 }
 
