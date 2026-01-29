@@ -62,9 +62,9 @@ const GelImageCanvas: React.FC<GelImageCanvasProps> = ({
       ctx.fillRect(cropRight, cropY, img.width - cropRight, cropH); // Right
       
       // ROI Border
-      ctx.strokeStyle = '#3b82f6';
-      ctx.lineWidth = 2;
-      ctx.setLineDash([5, 5]);
+      ctx.strokeStyle = '#00ff00';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([]);
       ctx.strokeRect(cropX, cropY, cropW, cropH);
       ctx.setLineDash([]);
 
@@ -73,13 +73,13 @@ const GelImageCanvas: React.FC<GelImageCanvasProps> = ({
         const isSelected = selectedLaneIndex === lane.index;
 
         // Lane Boundary
-        ctx.strokeStyle = isSelected ? 'rgba(234, 179, 8, 0.8)' : 'rgba(148, 163, 184, 0.3)'; 
-        ctx.lineWidth = isSelected ? 3 : 1;
+        ctx.strokeStyle = isSelected ? 'rgba(0, 255, 255, 0.8)' : 'rgba(148, 163, 184, 0.3)';
+        ctx.lineWidth = isSelected ? 2 : 1;
         ctx.strokeRect(lane.rect.x, lane.rect.y, lane.rect.width, lane.rect.height);
 
         // Lane Number
-        ctx.fillStyle = isSelected ? 'rgba(234, 179, 8, 1)' : 'rgba(255, 255, 255, 0.8)';
-        ctx.font = 'bold 16px sans-serif';
+        ctx.fillStyle = isSelected ? 'rgba(0, 255, 255, 1)' : 'rgba(255, 255, 255, 0.8)';
+        ctx.font = 'bold 16px monospace';
         ctx.fillText(`${lane.index}`, lane.rect.x + lane.rect.width / 2 - 5, lane.rect.y - 10);
         
         // Smears
@@ -111,15 +111,15 @@ const GelImageCanvas: React.FC<GelImageCanvasProps> = ({
              ctx.lineWidth = 1;
              ctx.stroke();
           } else {
-             ctx.fillStyle = band.isMainBand ? 'rgba(37, 99, 235, 0.15)' : 'rgba(244, 63, 94, 0.2)';
+             ctx.fillStyle = band.isMainBand ? 'rgba(0, 0, 255, 0.1)' : 'rgba(255, 0, 0, 0.1)';
              ctx.fillRect(lane.rect.x, startY, lane.rect.width, endY - startY);
              
              // Marker line
              ctx.beginPath();
              ctx.moveTo(lane.rect.x, absoluteY);
              ctx.lineTo(lane.rect.x + lane.rect.width, absoluteY);
-             ctx.strokeStyle = band.isMainBand ? 'rgba(37, 99, 235, 0.9)' : 'rgba(244, 63, 94, 0.8)'; 
-             ctx.lineWidth = band.isMainBand ? 3 : 2;
+             ctx.strokeStyle = band.isMainBand ? '#0000ff' : '#ff0000';
+             ctx.lineWidth = 1;
              ctx.stroke();
           }
         });
@@ -239,7 +239,7 @@ const GelImageCanvas: React.FC<GelImageCanvasProps> = ({
   };
 
   return (
-    <div ref={containerRef} className="w-full relative overflow-hidden rounded-md border border-slate-300 bg-black shadow-inner">
+    <div ref={containerRef} className="w-full relative overflow-hidden bg-black border border-neutral-500">
       <canvas 
         ref={canvasRef} 
         className={`w-full h-auto block ${interactionMode === 'crop' ? 'cursor-crosshair' : 'cursor-pointer'}`}

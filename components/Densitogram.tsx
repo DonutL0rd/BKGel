@@ -63,7 +63,7 @@ const Densitogram: React.FC<DensitogramProps> = ({
 
   if (!laneData) {
     return (
-      <div className="h-64 flex items-center justify-center text-slate-400 bg-slate-50 border border-slate-200 rounded-md">
+      <div className="h-64 flex items-center justify-center text-neutral-400 bg-white border border-neutral-300">
         Select a lane to view profile
       </div>
     );
@@ -77,17 +77,17 @@ const Densitogram: React.FC<DensitogramProps> = ({
   }));
 
   const getBandColor = (band: Band) => {
-    if (band.isExcluded) return "#94a3b8"; // Slate-400 (Gray)
-    if (band.isMainBand) return "#2563eb"; // Blue-600
-    if (band.isManual) return "#7c3aed";   // Violet-600
-    return "#f43f5e";                      // Rose-500
+    if (band.isExcluded) return "#a3a3a3"; // Neutral-400
+    if (band.isMainBand) return "#0000ff"; // Blue
+    if (band.isManual) return "#7c3aed";   // Violet
+    return "#ff0000";                      // Red
   };
 
   return (
     <div className="relative">
       <button 
         onClick={handleExport}
-        className="absolute top-0 right-0 z-10 p-1 text-slate-400 hover:text-blue-600 bg-white/80 rounded"
+        className="absolute top-0 right-0 z-10 p-1 text-neutral-400 hover:text-black bg-white border border-neutral-200"
         title="Export Plot as PNG"
       >
         <ImageDown size={16} />
@@ -95,7 +95,7 @@ const Densitogram: React.FC<DensitogramProps> = ({
 
       <div 
         ref={chartRef} 
-        className={`h-64 w-full ${isAddMode ? 'cursor-crosshair ring-2 ring-indigo-200 rounded bg-indigo-50/10' : 'cursor-pointer'}`}
+        className={`h-64 w-full ${isAddMode ? 'cursor-crosshair ring-2 ring-neutral-400 bg-neutral-50' : 'cursor-pointer'}`}
       >
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart 
@@ -105,13 +105,7 @@ const Densitogram: React.FC<DensitogramProps> = ({
               if (e && e.activeLabel) onChartClick(Number(e.activeLabel));
             }}
           >
-            <defs>
-              <linearGradient id="colorNet" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-              </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" />
             <XAxis 
               dataKey="pixel" 
               type="number" 
@@ -124,8 +118,8 @@ const Densitogram: React.FC<DensitogramProps> = ({
             />
             {!isAddMode && (
               <Tooltip 
-                contentStyle={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #e2e8f0' }}
-                labelStyle={{ color: '#64748b' }}
+                contentStyle={{ backgroundColor: '#fff', borderRadius: '0px', border: '1px solid #000' }}
+                labelStyle={{ color: '#000' }}
               />
             )}
             
@@ -133,10 +127,10 @@ const Densitogram: React.FC<DensitogramProps> = ({
                verticalAlign="top" 
                height={36} 
                payload={[
-                 { value: 'Net Signal', type: 'rect', color: '#3b82f6' },
-                 { value: 'Main Band', type: 'line', color: '#2563eb' },
-                 { value: 'Other Bands', type: 'line', color: '#f43f5e' },
-                 { value: 'Smear/Residue', type: 'rect', color: '#f59e0b' }
+                 { value: 'Net Signal', type: 'rect', color: '#000000' },
+                 { value: 'Main Band', type: 'line', color: '#0000ff' },
+                 { value: 'Other Bands', type: 'line', color: '#ff0000' },
+                 { value: 'Smear/Residue', type: 'rect', color: '#d4d4d4' }
                ]}
             />
 
@@ -144,7 +138,7 @@ const Densitogram: React.FC<DensitogramProps> = ({
               <Area
                 type="monotone"
                 dataKey="background"
-                stroke="#94a3b8"
+                stroke="#a3a3a3"
                 fill="transparent"
                 strokeWidth={1}
                 strokeDasharray="4 4"
@@ -156,9 +150,9 @@ const Densitogram: React.FC<DensitogramProps> = ({
             <Area
               type="monotone"
               dataKey="net"
-              stroke="#3b82f6"
+              stroke="#000000"
               fillOpacity={1}
-              fill="url(#colorNet)"
+              fill="#e5e5e5"
               name="Net Intensity"
               isAnimationActive={false}
             />
@@ -169,8 +163,8 @@ const Densitogram: React.FC<DensitogramProps> = ({
                    key={smear.id}
                    x1={smear.yStart}
                    x2={smear.yEnd}
-                   fill="#f59e0b" // Amber
-                   fillOpacity={0.15}
+                   fill="#d4d4d4" // Light Gray
+                   fillOpacity={0.5}
                    stroke="none"
                 />
             ))}
@@ -209,7 +203,7 @@ const Densitogram: React.FC<DensitogramProps> = ({
         </ResponsiveContainer>
       </div>
       {isAddMode && (
-        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-indigo-600 text-white text-xs px-3 py-1 rounded-full shadow-lg pointer-events-none animate-bounce">
+        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-neutral-800 text-white text-xs px-3 py-1 rounded-none shadow-none pointer-events-none">
           Click graph to place band peak
         </div>
       )}

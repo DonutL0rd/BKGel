@@ -61,30 +61,30 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, onExcludeBand, onS
   };
 
   return (
-    <div className="bg-white rounded-lg border border-slate-200 shadow-sm mt-6 overflow-hidden">
-      <div className="flex justify-between items-center p-4 border-b border-slate-200 bg-slate-50">
-        <h3 className="font-semibold text-slate-700">Quantification Results</h3>
+    <div className="bg-white border border-neutral-300 mt-6 overflow-hidden">
+      <div className="flex justify-between items-center p-4 border-b border-neutral-300 bg-neutral-100">
+        <h3 className="font-bold text-neutral-900 text-sm uppercase tracking-wider">Quantification Results</h3>
         <button 
           onClick={exportCSV}
-          className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 font-medium"
+          className="flex items-center gap-2 text-sm text-neutral-800 hover:text-black font-medium"
         >
           <Download size={16} /> Export CSV
         </button>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm text-left">
-          <thead className="bg-slate-100 text-slate-600 uppercase text-xs">
+        <table className="w-full text-sm text-left font-mono">
+          <thead className="bg-neutral-200 text-black uppercase text-xs font-bold">
             <tr>
-              <th className="px-6 py-3">Lane</th>
-              <th className="px-6 py-3">ID</th>
-              <th className="px-6 py-3">Type</th>
-              <th className="px-6 py-3 text-right">Band Vol</th>
-              <th className="px-6 py-3 text-right text-amber-600">Smear Vol</th>
-              <th className="px-6 py-3 text-right">Integrity</th>
-              <th className="px-6 py-3 text-center">Actions</th>
+              <th className="px-2 py-1 border-b border-neutral-300">Lane</th>
+              <th className="px-2 py-1 border-b border-neutral-300">ID</th>
+              <th className="px-2 py-1 border-b border-neutral-300">Type</th>
+              <th className="px-2 py-1 border-b border-neutral-300 text-right">Band Vol</th>
+              <th className="px-2 py-1 border-b border-neutral-300 text-right">Smear Vol</th>
+              <th className="px-2 py-1 border-b border-neutral-300 text-right">Integrity</th>
+              <th className="px-2 py-1 border-b border-neutral-300 text-center">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-neutral-200">
             {results.map((lane) => {
               const allItems = [
                   ...lane.bands.map(b => ({...b, type: 'band'})), 
@@ -97,46 +97,46 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, onExcludeBand, onS
               <React.Fragment key={lane.index}>
                 {allItems.length > 0 ? (
                   allItems.map((item, idx) => (
-                    <tr key={item.id} className={`hover:bg-slate-50 ${item.isMainBand ? 'bg-blue-50/50' : ''} ${item.isExcluded ? 'opacity-50 grayscale bg-slate-50' : ''}`}>
+                    <tr key={item.id} className={`hover:bg-neutral-100 ${item.isMainBand ? 'bg-blue-50/20' : ''} ${item.isExcluded ? 'opacity-50 grayscale bg-neutral-50' : ''}`}>
                       {idx === 0 && (
-                        <td className="px-6 py-4 font-medium text-slate-900 border-r border-slate-100" rowSpan={allItems.length}>
+                        <td className="px-2 py-1 font-medium text-black border-r border-neutral-200" rowSpan={allItems.length}>
                           Lane {lane.index}
                         </td>
                       )}
-                      <td className="px-6 py-4 text-slate-600 font-mono text-xs">{item.id}</td>
-                      <td className="px-6 py-4">
+                      <td className="px-2 py-1 text-neutral-600 text-xs">{item.id}</td>
+                      <td className="px-2 py-1">
                         {item.type === 'smear' ? (
-                           <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800">
-                             Smear Region
+                           <span className="text-amber-700 font-mono uppercase text-xs">
+                             Smear
                            </span>
                         ) : item.isExcluded ? (
-                            <span className="text-slate-400 italic">Excluded</span>
+                            <span className="text-neutral-400 italic text-xs">Excluded</span>
                         ) : item.isMainBand ? (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
-                            Main
+                          <span className="text-blue-700 font-bold font-mono uppercase text-xs">
+                            [Main]
                           </span>
                         ) : item.isManual ? (
-                           <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800">
-                            Manual
+                           <span className="text-purple-700 font-mono uppercase text-xs">
+                            [Manual]
                           </span>
                         ) : (
-                          <span className="text-slate-500">Band</span>
+                          <span className="text-neutral-500 text-xs">Band</span>
                         )}
                       </td>
-                      <td className="px-6 py-4 text-right font-mono">
+                      <td className="px-2 py-1 text-right">
                         {item.type === 'band' ? Math.round(item.volume).toLocaleString() : '-'}
                       </td>
                       {idx === 0 && (
-                        <td className="px-6 py-4 text-right font-mono text-amber-700 bg-amber-50/30 border-l border-slate-100" rowSpan={allItems.length}>
+                        <td className="px-2 py-1 text-right text-neutral-800 border-l border-neutral-200" rowSpan={allItems.length}>
                             {Math.round(lane.degradationVolume).toLocaleString()}
                         </td>
                       )}
                       {idx === 0 && (
-                         <td className="px-6 py-4 text-right border-l border-slate-100" rowSpan={allItems.length}>
+                         <td className="px-2 py-1 text-right border-l border-neutral-200" rowSpan={allItems.length}>
                            <div className="flex flex-col items-end">
                               <span className={`text-sm font-bold ${
-                                lane.integrityScore > 80 ? 'text-green-600' : 
-                                lane.integrityScore > 50 ? 'text-amber-600' : 'text-red-600'
+                                lane.integrityScore > 80 ? 'text-green-700' :
+                                lane.integrityScore > 50 ? 'text-amber-700' : 'text-red-700'
                               }`}>
                                 {lane.integrityScore.toFixed(1)}%
                               </span>
@@ -144,25 +144,25 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, onExcludeBand, onS
                          </td>
                       )}
                       
-                      <td className="px-6 py-4 text-center">
+                      <td className="px-2 py-1 text-center">
                         <div className="flex justify-center gap-2">
                            {item.type === 'band' && !item.isExcluded && (
                              <button 
                                onClick={() => onSetMainBand(lane.index, item.id)}
                                disabled={item.isMainBand}
-                               className={`p-1 rounded hover:bg-slate-200 ${item.isMainBand ? 'text-blue-500' : 'text-slate-400'}`}
+                               className={`p-1 hover:bg-neutral-200 ${item.isMainBand ? 'text-blue-600' : 'text-neutral-400'}`}
                                title="Set as Main Band"
                              >
-                               <Star size={16} fill={item.isMainBand ? "currentColor" : "none"} />
+                               <Star size={14} fill={item.isMainBand ? "currentColor" : "none"} />
                              </button>
                            )}
                            {item.type === 'band' && (
                             <button 
                                 onClick={() => onExcludeBand(item.id)}
-                                className={`p-1 rounded hover:bg-slate-200 ${item.isExcluded || item.isManual ? 'text-red-500' : 'text-slate-500'}`}
+                                className={`p-1 hover:bg-neutral-200 ${item.isExcluded || item.isManual ? 'text-red-600' : 'text-neutral-500'}`}
                                 title={item.isManual ? "Delete Band" : (item.isExcluded ? "Undo Remove" : "Remove Band")}
                             >
-                                {item.isManual ? <Trash2 size={16} /> : (item.isExcluded ? <Eye size={16} /> : <EyeOff size={16} />)}
+                                {item.isManual ? <Trash2 size={14} /> : (item.isExcluded ? <Eye size={14} /> : <EyeOff size={14} />)}
                             </button>
                            )}
                         </div>
@@ -170,22 +170,22 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, onExcludeBand, onS
                     </tr>
                   ))
                 ) : (
-                  <tr className="hover:bg-slate-50">
-                    <td className="px-6 py-4 font-medium text-slate-900 border-r border-slate-100">Lane {lane.index}</td>
-                    <td className="px-6 py-4 text-slate-400 font-mono text-xs">-</td>
-                    <td className="px-6 py-4">
+                  <tr className="hover:bg-neutral-50">
+                    <td className="px-2 py-1 font-medium text-black border-r border-neutral-200">Lane {lane.index}</td>
+                    <td className="px-2 py-1 text-neutral-400 text-xs">-</td>
+                    <td className="px-2 py-1">
                       {lane.smears.length > 0 ? (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800">Smear</span>
+                        <span className="text-amber-700 font-mono uppercase text-xs">Smear</span>
                       ) : (
-                        <span className="text-slate-400">Empty</span>
+                        <span className="text-neutral-400">Empty</span>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-right font-mono">0</td>
-                    <td className="px-6 py-4 text-right font-mono text-amber-700 bg-amber-50/30">
+                    <td className="px-2 py-1 text-right">0</td>
+                    <td className="px-2 py-1 text-right text-neutral-800">
                         {Math.round(lane.degradationVolume).toLocaleString()}
                     </td>
-                    <td className="px-6 py-4 text-right border-l border-slate-100">
-                      <span className="text-red-500 font-bold">{lane.integrityScore.toFixed(1)}%</span>
+                    <td className="px-2 py-1 text-right border-l border-neutral-200">
+                      <span className="text-red-600 font-bold">{lane.integrityScore.toFixed(1)}%</span>
                     </td>
                     <td></td>
                   </tr>
