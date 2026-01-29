@@ -14,6 +14,8 @@ import {
 import { LaneData, Band } from '../types';
 import { ImageDown } from 'lucide-react';
 
+const ReferenceAreaAny = ReferenceArea as any;
+
 interface DensitogramProps {
   laneData: LaneData | null;
   showBackground: boolean;
@@ -163,7 +165,7 @@ const Densitogram: React.FC<DensitogramProps> = ({
             
             {/* Render Smears */}
             {laneData.smears.map((smear) => (
-                <ReferenceArea
+                <ReferenceAreaAny
                    key={smear.id}
                    x1={smear.yStart}
                    x2={smear.yEnd}
@@ -192,7 +194,7 @@ const Densitogram: React.FC<DensitogramProps> = ({
                     />
                     
                     {/* Integration Area */}
-                    <ReferenceArea 
+                    <ReferenceAreaAny 
                       x1={band.yStart} 
                       x2={band.yEnd} 
                       fill={color}
