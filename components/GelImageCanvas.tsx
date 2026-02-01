@@ -239,7 +239,7 @@ const GelImageCanvas: React.FC<GelImageCanvasProps> = ({
   };
 
   return (
-    <div ref={containerRef} className="w-full relative overflow-hidden rounded-md border border-slate-300 bg-black shadow-inner">
+    <div ref={containerRef} className="w-full relative overflow-hidden rounded-md border border-slate-700 bg-black shadow-inner">
       <canvas 
         ref={canvasRef} 
         className={`w-full h-auto block ${interactionMode === 'crop' ? 'cursor-crosshair' : 'cursor-pointer'}`}

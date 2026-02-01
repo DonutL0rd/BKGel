@@ -63,7 +63,7 @@ const Densitogram: React.FC<DensitogramProps> = ({
 
   if (!laneData) {
     return (
-      <div className="h-64 flex items-center justify-center text-slate-400 bg-slate-50 border border-slate-200 rounded-md">
+      <div className="h-64 flex items-center justify-center text-slate-500 bg-slate-900 border border-slate-800 rounded-md">
         Select a lane to view profile
       </div>
     );
@@ -77,9 +77,9 @@ const Densitogram: React.FC<DensitogramProps> = ({
   }));
 
   const getBandColor = (band: Band) => {
-    if (band.isExcluded) return "#94a3b8"; // Slate-400 (Gray)
-    if (band.isMainBand) return "#2563eb"; // Blue-600
-    if (band.isManual) return "#7c3aed";   // Violet-600
+    if (band.isExcluded) return "#64748b"; // Slate-500
+    if (band.isMainBand) return "#3b82f6"; // Blue-500
+    if (band.isManual) return "#8b5cf6";   // Violet-500
     return "#f43f5e";                      // Rose-500
   };
 
@@ -87,7 +87,7 @@ const Densitogram: React.FC<DensitogramProps> = ({
     <div className="relative">
       <button 
         onClick={handleExport}
-        className="absolute top-0 right-0 z-10 p-1 text-slate-400 hover:text-blue-600 bg-white/80 rounded"
+        className="absolute top-0 right-0 z-10 p-1 text-slate-400 hover:text-blue-400 bg-slate-800/80 rounded"
         title="Export Plot as PNG"
       >
         <ImageDown size={16} />
@@ -95,7 +95,7 @@ const Densitogram: React.FC<DensitogramProps> = ({
 
       <div 
         ref={chartRef} 
-        className={`h-64 w-full ${isAddMode ? 'cursor-crosshair ring-2 ring-indigo-200 rounded bg-indigo-50/10' : 'cursor-pointer'}`}
+        className={`h-64 w-full ${isAddMode ? 'cursor-crosshair ring-2 ring-indigo-500/50 rounded bg-indigo-900/10' : 'cursor-pointer'}`}
       >
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart 
@@ -111,30 +111,31 @@ const Densitogram: React.FC<DensitogramProps> = ({
                 <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
             <XAxis 
               dataKey="pixel" 
               type="number" 
-              label={{ value: 'Migration Distance (px)', position: 'insideBottom', offset: -5, fontSize: 12 }} 
-              tick={{fontSize: 10}}
+              label={{ value: 'Migration Distance (px)', position: 'insideBottom', offset: -5, fontSize: 12, fill: '#94a3b8' }} 
+              tick={{fontSize: 10, fill: '#94a3b8'}}
             />
             <YAxis 
-              label={{ value: 'Intensity (AU)', angle: -90, position: 'insideLeft', fontSize: 12 }} 
-              tick={{fontSize: 10}}
+              label={{ value: 'Intensity (AU)', angle: -90, position: 'insideLeft', fontSize: 12, fill: '#94a3b8' }} 
+              tick={{fontSize: 10, fill: '#94a3b8'}}
             />
             {!isAddMode && (
               <Tooltip 
-                contentStyle={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #e2e8f0' }}
-                labelStyle={{ color: '#64748b' }}
+                contentStyle={{ backgroundColor: '#0f172a', borderRadius: '8px', border: '1px solid #1e293b', color: '#f1f5f9' }}
+                labelStyle={{ color: '#94a3b8' }}
               />
             )}
             
             <Legend 
                verticalAlign="top" 
                height={36} 
+               wrapperStyle={{ color: '#cbd5e1' }}
                payload={[
                  { value: 'Net Signal', type: 'rect', color: '#3b82f6' },
-                 { value: 'Main Band', type: 'line', color: '#2563eb' },
+                 { value: 'Main Band', type: 'line', color: '#3b82f6' },
                  { value: 'Other Bands', type: 'line', color: '#f43f5e' },
                  { value: 'Smear/Residue', type: 'rect', color: '#f59e0b' }
                ]}
@@ -144,7 +145,7 @@ const Densitogram: React.FC<DensitogramProps> = ({
               <Area
                 type="monotone"
                 dataKey="background"
-                stroke="#94a3b8"
+                stroke="#475569"
                 fill="transparent"
                 strokeWidth={1}
                 strokeDasharray="4 4"
